@@ -9,23 +9,28 @@
     "rewrites": [
       {
         "source": "/api/accounts",
-        "function": "accounts"
+        "function": "accounts",
+        "region": "us-central1"
       },
       {
         "source": "/api/accounts/**",
-        "function": "accounts"
+        "function": "accounts",
+        "region": "us-central1"
       },
       {
         "source": "/api/transactions",
-        "function": "transactions"
+        "function": "transactions",
+        "region": "us-central1"
       },
       {
         "source": "/api/transactions/**",
-        "function": "transactions"
+        "function": "transactions",
+        "region": "us-central1"
       },
       {
         "source": "/api/rates",
-        "function": "rates"
+        "function": "rates",
+        "region": "us-central1"
       },
       {
         "source": "**",

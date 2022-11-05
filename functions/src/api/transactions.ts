@@ -25,9 +25,9 @@ const blankTransaction: Transaction = {
 
 export const transactions = functions.https.onRequest(
   async (request, response) => {
-    // with the transactions, noone needs to get a single transaction, but all the transactions
-    // for a specific account
-    let accountId = request.path
+    // with the transactions, noone needs to get a single transaction,
+    // but all the transactions for a specific account
+    const accountId = request.path
       // in case it's requested from the hosting rewrite, remove the path
       .replace("/api/transactions", "")
       // remove the leading slash
@@ -50,8 +50,10 @@ export const transactions = functions.https.onRequest(
 
     if (accountId !== "" || request.method === "GET") {
       // it's a request for a specific account
-      const transactions = await getTransactions(accountId);
-      response.json(transactions);
+      const accountTransactions = await getTransactions(accountId);
+      response
+        .status(accountTransactions.length > 0 ? 200 : 404)
+        .json(accountTransactions);
     } else if (request.method === "POST") {
       // post request means to create a new transaction
       // we need not just to create the transaction object,
@@ -175,7 +177,8 @@ const getTransactions = async (accountId?: string): Promise<Transaction[]> => {
 
     return sourceTransactions.docs
       .map((doc) => doc.data() as Transaction)
-      .concat(targetTransactions.docs.map((doc) => doc.data() as Transaction));
+      .concat(targetTransactions.docs.map((doc) => doc.data() as Transaction))
+      .sort((a, b) => (a.date > b.date ? -1 : 1));
   } else {
     // if no account ID is provided, return all transactions
     const transactions = await admin

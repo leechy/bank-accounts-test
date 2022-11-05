@@ -19,7 +19,7 @@ const blankAccount: BankAccount = {
 };
 
 export const accounts = functions.https.onRequest(async (request, response) => {
-  let requestId = request.path
+  const requestId = request.path
     // in case it's requested from the hosting rewrite, remove the path
     .replace("/api/accounts", "")
     // remove the leading slash
