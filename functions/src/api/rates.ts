@@ -6,7 +6,7 @@ export const rates = functions.https.onRequest(async (request, response) => {
   // we just have to retrieve the rates from the database
   // and return them as a JSON
   const latestRates = await getLatestRates();
-  response.json(latestRates.docs[0].data());
+  response.json(latestRates);
 });
 
 /**
