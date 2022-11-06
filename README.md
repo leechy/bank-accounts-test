@@ -11,7 +11,7 @@ It will be a React app, using standart Redux for state management.
 
 The app will be written in TypeScript.
 
-For the UI, I'm using Material UI for React: [MUI](https://mui.com/core).
+For the UI, I'm using Material UI for React: [RMWC](https://rmwc.io/).
 
 For the API, I'm using [Firestore](https://firebase.google.com).
 

@@ -4,5 +4,8 @@
     "deploy:functions": "firebase deploy --only functions",
     "deploy:hosting": "firebase deploy --only hosting",
     "logs": "firebase functions:log"
+  },
+  "devDependencies": {
+    "sass": "^1.56.0"
   }
 }
