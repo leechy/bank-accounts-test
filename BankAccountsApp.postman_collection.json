@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "902f3e13-69c5-41eb-9231-36a6b1be6164",
+		"name": "Bank Accounts App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bank-accounts-test.web.app/api/accounts",
+					"protocol": "https",
+					"host": [
+						"bank-accounts-test",
+						"web",
+						"app"
+					],
+					"path": [
+						"api",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bank-accounts-test.web.app/api/accounts/ZQ3ON6PMF3CBwM",
+					"protocol": "https",
+					"host": [
+						"bank-accounts-test",
+						"web",
+						"app"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"ZQ3ON6PMF3CBwM"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bank\": \"ING\",\n    \"account\": \"ING Orange\",\n    \"balance\": 1850,\n    \"currency\": \"EUR\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://bank-accounts-test.web.app/api/accounts",
+					"protocol": "https",
+					"host": [
+						"bank-accounts-test",
+						"web",
+						"app"
+					],
+					"path": [
+						"api",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Rates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bank-accounts-test.web.app/api/rates",
+					"protocol": "https",
+					"host": [
+						"bank-accounts-test",
+						"web",
+						"app"
+					],
+					"path": [
+						"api",
+						"rates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update existing account",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"balance\": 3500, \"bank\": \"Credit Suiss\", \"currency\": \"CHF\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://bank-accounts-test.web.app/api/accounts/ZvoTfftOaLTDWE",
+					"protocol": "https",
+					"host": [
+						"bank-accounts-test",
+						"web",
+						"app"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"ZvoTfftOaLTDWE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all transactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bank-accounts-test.web.app/api/transactions",
+					"protocol": "https",
+					"host": [
+						"bank-accounts-test",
+						"web",
+						"app"
+					],
+					"path": [
+						"api",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get transactions for specific account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bank-accounts-test.web.app/api/transactions/vFOsCkP92R4EV5",
+					"protocol": "https",
+					"host": [
+						"bank-accounts-test",
+						"web",
+						"app"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"vFOsCkP92R4EV5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sourceAccount\": \"vFOsCkP92R4EV5\",\n    \"sourceAmount\": 250,\n    \"sourceCurrency\": \"EUR\",\n    \"targetAccount\": \"ZvoTfftOaLTDWE\",\n    \"targetAmount\": 250.8866333623,\n    \"targetCurrency\": \"CHF\",\n    \"rate\": 1.0035465334,\n    \"description\": \"Testing the transactions API\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://bank-accounts-test.web.app/api/transactions",
+					"protocol": "https",
+					"host": [
+						"bank-accounts-test",
+						"web",
+						"app"
+					],
+					"path": [
+						"api",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
