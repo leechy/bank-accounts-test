@@ -3,6 +3,7 @@
   --color-secondary: #a2bd30;
   --color-secondary-bg: #f7fce0;
   --color-secondary-dark: #73832a;
+  --color-error: #c42121;
 }
 
 .layout {
@@ -18,6 +19,10 @@
   & > .mdc-drawer {
     flex: 1 0 250px;
     min-height: 100vh;
+
+    @media (max-width: 600px) {
+      display: none;
+    }
 
     .mdc-list-item--activated {
       color: var(--color-secondary-dark);
@@ -40,11 +45,51 @@
       top: 0;
       width: calc(100vw - 250px);
     }
+
+    @media (max-width: 600px) {
+      flex: 7 0 100%;
+
+      & > .mdc-top-app-bar--fixed {
+        width: 100vw;
+      }
+    }
+  }
+
+  &--tabs {
+    --mdc-typography-button-text-transform: none;
+
+    position: fixed;
+    z-index: 9;
+    bottom: 0;
+    display: none;
+
+    background-color: var(--color-light, #fff);
+
+    @media (max-width: 600px) {
+      display: block;
+    }
+
+    .mdc-tab--active .mdc-tab__text-label {
+      color: var(--color-secondary-dark);
+    }
   }
 
   &--content {
+    max-width: 62rem;
+    min-height: calc(100vh - 7.5rem);
+    margin: 0 auto;
     padding: 5.5rem 1rem 2rem;
+
+    @media (max-width: 600px) {
+      padding-bottom: 4.5rem;
+      min-height: calc(100vh - 10rem);
+    }
   }
+}
+
+.loader--container {
+  margin: 2rem auto;
+  text-align: center;
 }
 
 .accounts {
@@ -86,6 +131,33 @@
   }
 }
 
+.account {
+  &--card {
+    padding: 1rem;
+    background-color: var(--color-secondary-bg, #eff7cc);
+    border-radius: 0.5rem;
+  }
+
+  .mdc-typography {
+    &--subtitle1 {
+      margin: 0;
+    }
+    &--subtitle2 {
+      margin: 2rem 0 1rem 1rem;
+      font-size: 1.2rem;
+    }
+    &--headline3 {
+      margin: 1rem;
+      text-align: center;
+      color: var(--color-secondary-dark, #73832a) !important;
+    }
+    &--headline4 {
+      margin: 0 0 0.5rem 0;
+    }
+  }
+
+}
+
 .rates {
   .mdc-typography {
     &--body1 {
@@ -99,5 +171,40 @@
     column-gap: 1rem;
     row-gap: 1rem;
   }
+}
 
+.transactions-table {
+  .mdc-data-table {
+    min-width: 100%;
+  }
+
+  .transaction {
+    &--pending {
+      color: var(--color-secondary-dark, #73832a);
+    }
+    &--error {
+      color: var(--color-error, #990000);
+    }
+    &--number {
+      text-align: right;
+    }
+    &--account {
+      font-weight: bold;
+    }
+    &--note-row {
+      border-top-width: 0;
+    }
+    &--note {
+      vertical-align: top;
+      height: 2rem;
+      font-style: italic;
+    }
+  }
+}
+
+.action {
+  &--container {
+    padding: 0 1rem 1.5rem;
+    text-align: right;
+  }
 }
