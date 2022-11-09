@@ -208,3 +208,41 @@
     text-align: right;
   }
 }
+
+.form {
+  &--field {
+    display: flex;
+    flex-direction: row;
+
+    margin: 0 0 1.5rem 0;
+  }
+  &--input {
+    flex: 1;
+    background-color: var(--color-secondary-bg, #eff7cc) !important;
+
+    .mdc-floating-label {
+      color: var(--color-secondary-dark, #73832a) !important;
+    }
+    .mdc-text-field__input {
+      font-size: 1.2rem;
+    }
+    .mdc-line-ripple::before,
+    .mdc-line-ripple::after {
+      border-bottom-color: var(--color-secondary-dark, #73832a) !important;
+    }
+  }
+  &--currency-select {
+    flex: 0 0 5rem;
+    margin-left: 1rem;
+
+    .mdc-select__anchor {
+      width: 9rem;
+      background-color: var(--color-secondary-bg, #eff7cc) !important;
+    }
+  }
+  &--checkbox {
+    & > label {
+      color: var(--color-primary, #000);
+    }
+  }
+}

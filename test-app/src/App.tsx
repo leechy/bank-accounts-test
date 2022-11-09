@@ -17,6 +17,7 @@ import Transactions from "./pages/Transactions";
 import Rates from "./pages/Rates";
 import Error404 from "./pages/Error404";
 import Account from "./pages/Account";
+import AccountEdit from "./pages/AccountEdit";
 
 // styles
 import "./App.scss";
@@ -29,7 +30,9 @@ function App() {
         <Route path="accounts" element={<Accounts />} />
         <Route path="transactions" element={<Transactions />} />
         <Route path="rates" element={<Rates />} />
+        <Route path="accounts/new" element={<AccountEdit />} />
         <Route path="accounts/:accountId" element={<Account />} />
+        <Route path="accounts/:accountId/edit" element={<AccountEdit />} />
       </Route>
     )
   );
@@ -42,6 +45,7 @@ function App() {
           primary: "#3d3d3f",
           secondary: "#a2bd30",
           textPrimaryOnBackground: "#a2bd30",
+          textSecondaryOnLight: "#73832a",
         }}
       >
         <Store>

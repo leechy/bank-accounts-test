@@ -1,6 +1,6 @@
 // hooks
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Typography } from "rmwc";
 
 // components
@@ -20,6 +20,8 @@ const Account = () => {
   const params = useParams();
   const accountId = params.accountId;
 
+  const navigate = useNavigate();
+
   const account = useSelector((state: RootState) =>
     accountId ? state.accounts?.records[accountId] : null
   ) as BankAccount | null;
@@ -35,6 +37,9 @@ const Account = () => {
         title={account?.account || "Loading..."}
         action="Edit"
         actionIcon="edit"
+        onAction={() => {
+          navigate(`/accounts/${accountId}/edit`);
+        }}
       />
       <main className="layout--content account">
         {account ? (

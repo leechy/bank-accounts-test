@@ -8,15 +8,12 @@ import AppBar from "../components/AppBar";
 import Loading from "../components/Loading";
 import { AccountsState } from "../models/bank-account";
 import { Fab } from "rmwc";
+import { Link } from "react-router-dom";
 
 // types
 import { RootState, store } from "../store";
 
 const Accounts = () => {
-  const createNewAccount = () => {
-    console.log("Create new account");
-  };
-
   // get the accounts from the state
   const accounts = useSelector(
     (state: RootState) => state.accounts
@@ -40,6 +37,8 @@ const Accounts = () => {
             theme={["textPrimaryOnLight"]}
             style={{ fontSize: "0.8rem", height: "32px" }}
             mini
+            tag={Link}
+            to="/accounts/new"
           />
         </div>
         {accounts?.status === "loaded" ? (

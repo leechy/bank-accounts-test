@@ -20,6 +20,7 @@ import { balanceString, dateString } from "../utils/format";
 // types
 import { Transaction } from "../models/transaction";
 import { RootState } from "../store";
+import React from "react";
 
 type TransactionsTableProps = {
   transactions: Transaction[];
@@ -87,8 +88,8 @@ const TransactionsTable = ({
                   ? "transaction--pending"
                   : "";
               return (
-                <>
-                  <DataTableRow key={transaction.date}>
+                <React.Fragment key={transaction.date}>
+                  <DataTableRow>
                     <DataTableCell className={className}>
                       {dateString(transaction.date)}
                     </DataTableCell>
@@ -144,7 +145,7 @@ const TransactionsTable = ({
                       </DataTableCell>
                     </DataTableRow>
                   )}
-                </>
+                </React.Fragment>
               );
             })}
           </DataTableBody>

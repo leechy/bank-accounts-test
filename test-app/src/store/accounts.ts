@@ -45,5 +45,29 @@ export const accounts = createModel<RootModel>()({
         }
       }
     },
+    async createAccount(data: BankAccount) {
+      const response = await fetch(
+        "//bank-accounts-test.web.app/api/accounts",
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+      if (response.ok) {
+        dispatch.accounts.getAccounts();
+      }
+    },
+    async updateAccount(data: BankAccount) {
+      const response = await fetch(
+        "//bank-accounts-test.web.app/api/accounts/" + data.id,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+      if (response.ok) {
+        dispatch.accounts.getAccounts();
+      }
+    },
   }),
 });
