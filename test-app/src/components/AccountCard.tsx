@@ -7,6 +7,7 @@ import {
   CardPrimaryAction,
   Typography,
 } from "rmwc";
+import { balanceString } from "../utils/format";
 
 type AccountCardProps = {
   id: string;
@@ -23,11 +24,6 @@ const AccountCard = ({
   balance = 0,
   currency,
 }: AccountCardProps) => {
-  const balanceString = balance.toLocaleString("en-GB", {
-    style: "currency",
-    currency,
-  });
-
   return (
     <Card className="accounts--card">
       <CardPrimaryAction tag={Link} to={`/accounts/${id}`}>
@@ -43,14 +39,18 @@ const AccountCard = ({
             {account || "Untitled Account"}
           </Typography>
           <Typography use="headline4" tag="h1" theme="textPrimaryOnBackground">
-            {balanceString}
+            {balanceString(balance, currency)}
           </Typography>
         </div>
       </CardPrimaryAction>
       <CardActions theme="onSecondary">
         <CardActionButtons>
-          <CardActionButton>Top Up</CardActionButton>
-          <CardActionButton>Send Off</CardActionButton>
+          <CardActionButton tag={Link} to={`/transactions/to/${id}`}>
+            Top Up
+          </CardActionButton>
+          <CardActionButton tag={Link} to={`/transactions/from/${id}`}>
+            Send Off
+          </CardActionButton>
         </CardActionButtons>
       </CardActions>
     </Card>

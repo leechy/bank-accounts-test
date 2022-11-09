@@ -7,6 +7,7 @@ import AppBar from "../components/AppBar";
 import Loading from "../components/Loading";
 import TransactionsTable from "../components/TransactionsTable";
 import { Fab } from "rmwc";
+import { Link } from "react-router-dom";
 
 // types
 import { TransactionsState } from "../models/transaction";
@@ -31,7 +32,12 @@ const Transactions = () => {
           {transactions.status === "loaded" ? (
             <>
               <div className="action--container">
-                <Fab icon="add" label="Create New Transaction" />
+                <Fab
+                  icon="add"
+                  label="New Transfer"
+                  tag={Link}
+                  to="/transactions/new"
+                />
               </div>
               <TransactionsTable transactions={transactions.records} />
             </>

@@ -211,6 +211,7 @@
 
 .form {
   &--field {
+    position: relative;
     display: flex;
     flex-direction: row;
 
@@ -230,15 +231,26 @@
     .mdc-line-ripple::after {
       border-bottom-color: var(--color-secondary-dark, #73832a) !important;
     }
+
+    &--suffix {
+      position: absolute;
+      z-index: 3;
+      right: 2.5rem;
+      bottom: 0.8rem;
+    }
   }
-  &--currency-select {
-    flex: 0 0 5rem;
-    margin-left: 1rem;
+  &--currency-select,
+  &--account-select {
+    flex: 1;
 
     .mdc-select__anchor {
       width: 9rem;
       background-color: var(--color-secondary-bg, #eff7cc) !important;
     }
+  }
+  &--currency-select {
+    flex: 0 0 5rem;
+    margin-left: 1rem;
   }
   &--checkbox {
     & > label {
