@@ -56,7 +56,7 @@ export const accounts = functions.https.onRequest(async (request, response) => {
         request.method === "PATCH"
       ) {
         // in any of these requests, we are going to update the account
-        updateAccount(requestId, data, account);
+        await updateAccount(requestId, data, account);
       }
       // no support for the other methods in this demo
 

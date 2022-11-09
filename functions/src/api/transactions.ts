@@ -129,12 +129,12 @@ export const transactions = functions.https.onRequest(
         .collection("transactions")
         .doc(transactionData.date.replace(/:/g, ".") + "-" + nanoid())
         .set(transactionData)
-        .then(() => {
+        .then(async () => {
           if (transactionData.status !== "cancelled") {
             // if there were no problems with the accounts
             // update the balances of the accounts
             if (sourceAccount) {
-              updateAccount(
+              await updateAccount(
                 sourceAccount.id,
                 {
                   balance: sourceAccount.balance - transactionData.sourceAmount,
@@ -143,7 +143,7 @@ export const transactions = functions.https.onRequest(
               );
             }
             if (targetAccount) {
-              updateAccount(
+              await updateAccount(
                 targetAccount.id,
                 {
                   balance: targetAccount.balance + transactionData.targetAmount,
@@ -186,7 +186,7 @@ const getTransactions = async (accountId?: string): Promise<Transaction[]> => {
     return sourceTransactions.docs
       .map((doc) => doc.data() as Transaction)
       .concat(targetTransactions.docs.map((doc) => doc.data() as Transaction))
-      .sort((a, b) => (a.date > b.date ? -1 : 1));
+      .sort((a, b) => (a.date > b.date ? 1 : -1));
   } else {
     // if no account ID is provided, return all transactions
     const transactions = await admin
