@@ -25,6 +25,11 @@ const blankTransaction: Transaction = {
 
 export const transactions = functions.https.onRequest(
   async (request, response) => {
+    // set no-CORS response headers
+    response.header({
+      "Access-Control-Allow-Origin": "*",
+    });
+
     // with the transactions, noone needs to get a single transaction,
     // but all the transactions for a specific account
     const accountId = request.path
@@ -80,19 +85,16 @@ export const transactions = functions.https.onRequest(
           transactionData.status = "cancelled";
           transactionData.error = "Source account is suspended";
           response.status(400).json(transactionData);
-          return;
         }
         if (sourceAccount.balance < transactionData.sourceAmount) {
           transactionData.status = "cancelled";
           transactionData.error = "Insufficient funds in the source account";
           response.status(400).json(transactionData);
-          return;
         }
         if (sourceAccount.currency !== transactionData.sourceCurrency) {
           transactionData.status = "cancelled";
           transactionData.error = "Invalid currency for the source account";
           response.status(400).json(transactionData);
-          return;
         }
       }
       if (targetAccount) {
@@ -100,49 +102,55 @@ export const transactions = functions.https.onRequest(
           transactionData.status = "cancelled";
           transactionData.error = "Target account is suspended";
           response.status(400).json(transactionData);
-          return;
         }
         if (targetAccount.currency !== transactionData.targetCurrency) {
           transactionData.status = "cancelled";
           transactionData.error = "Invalid currency for the target account";
           response.status(400).json(transactionData);
-          return;
         }
       } else {
         // No, we do not allow transactions to unexisting accounts
         transactionData.status = "cancelled";
         transactionData.error = "Target account does not exist";
         response.status(400).json(transactionData);
-        return;
       }
 
       // TODO: check if the rate is correct
 
-      // if the transaction is valid, create it
+      // update the status of the not cancelled transaction
+      if (transactionData.status === "pending") {
+        transactionData.status = "completed";
+      }
+
+      // store the transaction in the database
+      // even if it's invalid, we still store it to be able to see it
       await admin
         .firestore()
         .collection("transactions")
         .doc(transactionData.date.replace(/:/g, ".") + "-" + nanoid())
         .set(transactionData)
         .then(() => {
-          // and update the balances of the accounts
-          if (sourceAccount) {
-            updateAccount(
-              sourceAccount.id,
-              {
-                balance: sourceAccount.balance - transactionData.sourceAmount,
-              },
-              sourceAccount
-            );
-          }
-          if (targetAccount) {
-            updateAccount(
-              targetAccount.id,
-              {
-                balance: targetAccount.balance + transactionData.targetAmount,
-              },
-              targetAccount
-            );
+          if (transactionData.status !== "cancelled") {
+            // if there were no problems with the accounts
+            // update the balances of the accounts
+            if (sourceAccount) {
+              updateAccount(
+                sourceAccount.id,
+                {
+                  balance: sourceAccount.balance - transactionData.sourceAmount,
+                },
+                sourceAccount
+              );
+            }
+            if (targetAccount) {
+              updateAccount(
+                targetAccount.id,
+                {
+                  balance: targetAccount.balance + transactionData.targetAmount,
+                },
+                targetAccount
+              );
+            }
           }
           // return the transaction data
           response.status(201).json(transactionData);

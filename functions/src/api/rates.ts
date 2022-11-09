@@ -6,7 +6,12 @@ export const rates = functions.https.onRequest(async (request, response) => {
   // we just have to retrieve the rates from the database
   // and return them as a JSON
   const latestRates = await getLatestRates();
-  response.json(latestRates);
+  response
+    .status(200)
+    .header({
+      "Access-Control-Allow-Origin": "*",
+    })
+    .json(latestRates);
 });
 
 /**

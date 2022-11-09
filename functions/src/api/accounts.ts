@@ -19,6 +19,11 @@ const blankAccount: BankAccount = {
 };
 
 export const accounts = functions.https.onRequest(async (request, response) => {
+  // set no-CORS response headers
+  response.header({
+    "Access-Control-Allow-Origin": "*",
+  });
+
   const requestId = request.path
     // in case it's requested from the hosting rewrite, remove the path
     .replace("/api/accounts", "")
@@ -57,7 +62,7 @@ export const accounts = functions.https.onRequest(async (request, response) => {
 
       // return the updated account data
       const updatedAccount = await getAccountData(requestId);
-      response.json(updatedAccount);
+      response.status(200).json(updatedAccount);
     } else {
       // if the account doesn't exist, return an error
       response.status(404).send("Account not found");
@@ -73,7 +78,7 @@ export const accounts = functions.https.onRequest(async (request, response) => {
     // return all accounts as a response to any successful request
     if ((response.statusCode || 200) < 299) {
       const accounts = await getAllAccounts();
-      response.json(accounts);
+      response.status(200).json(accounts);
     }
   }
 });
