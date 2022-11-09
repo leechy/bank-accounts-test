@@ -6,7 +6,13 @@
  * @param currency  The currency of the account
  * @returns string
  */
-export const balanceString = (balance: number, currency: string): string => {
+export const balanceString = (
+  balance: number | string,
+  currency: string = "EUR"
+): string => {
+  if (typeof balance === "string") {
+    balance = parseFloat(balance);
+  }
   return balance.toLocaleString("en-GB", {
     style: "currency",
     currency,

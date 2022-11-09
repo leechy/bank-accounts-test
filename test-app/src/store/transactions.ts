@@ -11,10 +11,10 @@ export const transactions = createModel<RootModel>()({
     status: "initial",
   } as TransactionsState,
   reducers: {
-    update(state, payload) {
+    update(state, payload: Transaction[]) {
       return {
         ...state,
-        records: payload,
+        records: payload.sort((a, b) => (a.date < b.date ? 1 : -1)),
       };
     },
     setStatus(state, payload) {
@@ -36,6 +36,19 @@ export const transactions = createModel<RootModel>()({
           dispatch.transactions.update(transactions);
           dispatch.transactions.setStatus("loaded");
         }
+      }
+    },
+    async createTransaction(data: Transaction) {
+      const response = await fetch(
+        "//bank-accounts-test.web.app/api/transactions",
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+      if (response.ok) {
+        dispatch.transactions.getTransactions();
+        dispatch.accounts.getAccounts();
       }
     },
   }),

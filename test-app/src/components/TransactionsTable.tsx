@@ -10,7 +10,6 @@ import {
   DataTableHead,
   DataTableHeadCell,
   DataTableRow,
-  SimpleDataTable,
   Typography,
 } from "rmwc";
 
