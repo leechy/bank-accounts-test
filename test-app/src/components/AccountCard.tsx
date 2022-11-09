@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Card,
   CardActionButton,
@@ -8,6 +9,7 @@ import {
 } from "rmwc";
 
 type AccountCardProps = {
+  id: string;
   bank?: string;
   account?: string;
   balance?: number;
@@ -15,6 +17,7 @@ type AccountCardProps = {
 };
 
 const AccountCard = ({
+  id,
   bank,
   account,
   balance = 0,
@@ -27,7 +30,7 @@ const AccountCard = ({
 
   return (
     <Card className="accounts--card">
-      <CardPrimaryAction>
+      <CardPrimaryAction tag={Link} to={`/accounts/${id}`}>
         <div className="accounts--card-primary-action">
           <Typography
             use="subtitle2"
@@ -47,7 +50,7 @@ const AccountCard = ({
       <CardActions theme="onSecondary">
         <CardActionButtons>
           <CardActionButton>Top Up</CardActionButton>
-          <CardActionButton>Use Up</CardActionButton>
+          <CardActionButton>Send Off</CardActionButton>
         </CardActionButtons>
       </CardActions>
     </Card>

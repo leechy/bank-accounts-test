@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   Drawer,
@@ -9,30 +9,58 @@ import {
   DrawerTitle,
   List,
   ListItem,
+  Tab,
+  TabBar,
 } from "rmwc";
-
-type PageProps = {
-  children: ReactElement;
-};
 
 const pages = [
   { title: "Accounts", path: "/accounts" },
-  { title: "Transactions Log", path: "/transactions" },
-  { title: "Current Rates", path: "/rates" },
+  { title: "Transactions Log", short: "Transactions", path: "/transactions" },
+  { title: "Current Rates", short: "Rates", path: "/rates" },
 ];
 
-const Page = ({ children }: PageProps) => {
+const Page = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname === "/") {
       navigate("/accounts");
+    } else {
+      const tabIndex = pages.findIndex(
+        (page) => location.pathname.indexOf(page.path) === 0
+      );
+      if (tabIndex !== activeTab) {
+        switchTab(tabIndex);
+      }
     }
   }, [location, navigate]);
 
+  const [activeTab, setActiveTab] = useState(0);
+  const switchTab = (index: number) => {
+    setActiveTab(index);
+  };
+
+  useEffect(() => {
+    if (
+      pages[activeTab] &&
+      location.pathname.indexOf(pages[activeTab].path) === -1
+    ) {
+      navigate(pages[activeTab].path);
+    }
+  }, [activeTab]);
+
   return (
     <div className="layout">
+      <TabBar
+        activeTabIndex={activeTab}
+        onActivate={(evt) => switchTab(evt.detail.index)}
+        className="layout--tabs"
+      >
+        {pages.map((page) => (
+          <Tab key={page.path}>{page.short || page.title}</Tab>
+        ))}
+      </TabBar>
       <Drawer>
         <DrawerHeader>
           <DrawerTitle>Funds Transfers</DrawerTitle>
@@ -45,7 +73,7 @@ const Page = ({ children }: PageProps) => {
                 key={page.path}
                 tag={Link}
                 to={page.path}
-                activated={location.pathname === page.path}
+                activated={location.pathname.indexOf(page.path) === 0}
               >
                 {page.title}
               </ListItem>
