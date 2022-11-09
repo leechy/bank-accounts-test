@@ -15,6 +15,8 @@ For the UI, I'm using Material UI for React: [RMWC](https://rmwc.io/).
 
 For the API, I'm using [Firestore](https://firebase.google.com).
 
+For the state management, I'm using [Rematch](https://rematchjs.org/).
+
 For the currency conversion, I'm using [Exchange Rates API](https://exchangeratesapi.io).
 
 ## Repository

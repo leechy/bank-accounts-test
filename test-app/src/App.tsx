@@ -8,6 +8,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import Store from "./components/Store";
 
 // pages
 import Page from "./components/Page";
@@ -24,19 +25,11 @@ import "rmwc/dist/styles";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route
-        path="/"
-        element={
-          <Page>
-            <></>
-          </Page>
-        }
-        errorElement={<Error404 />}
-      >
+      <Route path="/" element={<Page />} errorElement={<Error404 />}>
         <Route path="accounts" element={<Accounts />} />
         <Route path="transactions" element={<Transactions />} />
         <Route path="rates" element={<Rates />} />
-        <Route path=":accountId" element={<Account />} />
+        <Route path="accounts/:accountId" element={<Account />} />
       </Route>
     )
   );
@@ -51,7 +44,9 @@ function App() {
           textPrimaryOnBackground: "#a2bd30",
         }}
       >
-        <RouterProvider router={router} />
+        <Store>
+          <RouterProvider router={router} />
+        </Store>
       </ThemeProvider>
     </React.StrictMode>
   );

@@ -6,3 +6,12 @@ export type BankAccount = {
   balance: number;
   suspended?: boolean;
 };
+
+export type BankAccounts = {
+  [accountId: string]: BankAccount;
+};
+
+export type AccountsState = {
+  records: BankAccounts;
+  status: "initial" | "loading" | "loaded";
+};

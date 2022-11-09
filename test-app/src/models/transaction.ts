@@ -13,3 +13,8 @@ export type Transaction = {
 };
 
 export type TransactionStatus = "pending" | "completed" | "cancelled";
+
+export type TransactionsState = {
+  records: Transaction[];
+  status: "initial" | "loading" | "loaded";
+};
